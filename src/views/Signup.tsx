@@ -15,6 +15,7 @@ import auth from "../firebase";
 
 const Signup = (props: any) => {
   const { currentUser } = useContext(AuthContext);
+  const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
@@ -29,6 +30,20 @@ const Signup = (props: any) => {
         <Grid container>
           <Grid item md={4}></Grid>
           <Grid item md={4}>
+            <FormControl fullWidth>
+              <TextField
+                style={{ marginTop: "0.5em", marginBottom: "0.5em" }}
+                name="name"
+                label="name"
+                fullWidth
+                variant="outlined"
+                type="text"
+                value={name}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                  setName(event.target.value);
+                }}
+              />
+            </FormControl>
             <FormControl margin="normal" fullWidth>
               <TextField
                 style={{ marginTop: "0.5em", marginBottom: "0.5em" }}
@@ -61,8 +76,12 @@ const Signup = (props: any) => {
                 fullWidth
                 onClick={async () => {
                   try {
-                    await auth.createUserWithEmailAndPassword(email, password);
-                    // mail for e-mail address verification can be sent here by using sendSignInLinkToEmail()
+                    await auth
+                      .createUserWithEmailAndPassword(email, password)
+                      .then((result: any) => {
+                        result.user.updateProfile({ displayName: name });
+                        // mail for e-mail address verification can be sent here by using sendSignInLinkToEmail()
+                      });
                     props.history.push("/login");
                   } catch (error) {
                     alert(error.message);

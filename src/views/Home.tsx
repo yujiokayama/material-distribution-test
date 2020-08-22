@@ -3,6 +3,7 @@ import React, { Fragment, useContext, useEffect } from "react";
 import { Button, Container, Grid, Typography } from "@material-ui/core";
 
 import { AuthContext } from "../Auth";
+import firebase from "firebase";
 import auth from "../firebase";
 
 const Home: React.FC = (props: any) => {
@@ -19,20 +20,23 @@ const Home: React.FC = (props: any) => {
         <Grid container style={{ marginTop: "1em" }}>
           <Grid item md={4}></Grid>
           <Grid item md={4}>
-            <Typography>Here is the user's information</Typography>
             <Typography
               variant="caption"
               style={{
                 paddingTop: "2em",
                 paddingBottom: "2em",
-                whiteSpace: "pre"
+                whiteSpace: "pre",
               }}
             >
               {currentUser && JSON.stringify(currentUser, null, 4)}
             </Typography>
+            <h1>
+              Hello: {currentUser && currentUser.displayName}!!
+            </h1>
+
             <Button
               fullWidth
-              onClick={async event => {
+              onClick={async (e) => {
                 try {
                   await auth.signOut();
                   props.history.push("/login");
