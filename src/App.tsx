@@ -6,11 +6,14 @@ import Home from "./views/Home";
 import Login from "./views/Login";
 import Signup from "./views/Signup";
 
+import Header from "./components/Header";
+
 import "./App.css";
 
 const App: React.FC = () => {
   return (
     <Router>
+      <Header />
       <Switch>
         <AuthProvider>
           <Route exact path="/" component={Home} />
