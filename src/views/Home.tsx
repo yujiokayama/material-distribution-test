@@ -1,5 +1,7 @@
 import React, { useContext, useEffect } from "react";
 
+import { useHistory } from "react-router-dom";
+
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { RootState } from "../stores/rootReducer";
@@ -54,6 +56,11 @@ const Home: React.FC = (props: any) => {
     dispatch(setSearchWord(event.target.value));
   };
 
+  const history = useHistory();
+  const handleSubmit = () => {
+    history.push(`/search/${searchWord}`);
+  };
+
   useEffect(() => {
     currentUser === null && props.history.push("/login");
   }, [currentUser]);
@@ -61,7 +68,11 @@ const Home: React.FC = (props: any) => {
   return (
     <>
       <div className={classes.background}>
-        <Paper className={classes.paper}>
+        <Paper
+          component="form"
+          onSubmit={handleSubmit}
+          className={classes.paper}
+        >
           <IconButton type="submit">
             <SearchIcon />
           </IconButton>
