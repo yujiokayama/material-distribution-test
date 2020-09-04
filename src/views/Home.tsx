@@ -15,6 +15,7 @@ import {
   IconButton,
   InputBase,
 } from "@material-ui/core";
+
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
 
@@ -76,12 +77,14 @@ const Home: React.FC = (props: any) => {
               <Typography
                 variant="caption"
                 style={{
+                  textAlign: "center",
                   paddingTop: "2em",
                   paddingBottom: "2em",
                   whiteSpace: "pre",
                 }}
-              ></Typography>
-              <h1>Hello: {currentUser && currentUser.displayName}!!</h1>
+              >
+                <h1>Hello: {currentUser && currentUser.displayName}!!</h1>
+              </Typography>
 
               <Button
                 fullWidth

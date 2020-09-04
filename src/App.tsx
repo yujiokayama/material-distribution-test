@@ -13,9 +13,9 @@ import "./App.css";
 const App: React.FC = () => {
   return (
     <Router>
-      <Header />
       <Switch>
         <AuthProvider>
+          <Header />
           <Route exact path="/" component={Home} />
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/login" component={Login} />
