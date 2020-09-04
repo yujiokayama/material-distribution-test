@@ -1,5 +1,11 @@
 import React, { useContext, useEffect } from "react";
 
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { RootState } from "../stores/rootReducer";
+
+import { setSearchWord } from "../stores/modules/SearchWord";
+
 import {
   Button,
   Container,
@@ -36,7 +42,16 @@ const useStyles = makeStyles(() =>
 
 const Home: React.FC = (props: any) => {
   const { currentUser } = useContext(AuthContext);
+
   const classes = useStyles();
+
+  const { searchWord } = useSelector((state: RootState) => {
+    return state.SearchWord;
+  });
+  const dispatch = useDispatch();
+  const handleSearchWord = (event: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setSearchWord(event.target.value));
+  };
 
   useEffect(() => {
     currentUser === null && props.history.push("/login");
@@ -49,7 +64,10 @@ const Home: React.FC = (props: any) => {
           <IconButton type="submit">
             <SearchIcon />
           </IconButton>
-          <InputBase placeholder="検索ワードを入力" />
+          <InputBase
+            placeholder="検索ワードを入力"
+            onChange={handleSearchWord}
+          />
         </Paper>
         <Container>
           <Grid container style={{ marginTop: "1em" }}>
@@ -62,14 +80,12 @@ const Home: React.FC = (props: any) => {
                   paddingBottom: "2em",
                   whiteSpace: "pre",
                 }}
-              >
-                {/* {currentUser && JSON.stringify(currentUser, null, 4)} */}
-              </Typography>
+              ></Typography>
               <h1>Hello: {currentUser && currentUser.displayName}!!</h1>
 
               <Button
                 fullWidth
-                onClick={async (e) => {
+                onClick={async () => {
                   try {
                     await auth.signOut();
                     props.history.push("/login");
