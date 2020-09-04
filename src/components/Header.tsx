@@ -1,11 +1,11 @@
 import React from "react";
 import { AppBar, Toolbar } from "@material-ui/core";
 
-const Header: React.FC = (props: any) => {
+const Header: React.FC = () => {
   return (
     <>
       <AppBar position="static">
-        <Toolbar>会員サイト</Toolbar>
+        <Toolbar>素材配布サイト</Toolbar>
       </AppBar>
     </>
   );

@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 
 type State = {
-  searchWord: string | null;
+  searchWord: string | null | undefined;
 };
 
 const initialState: State = {
-  searchWord: null,
+  searchWord: '',
 };
 
 const searchWordModule = createSlice({
@@ -14,7 +14,7 @@ const searchWordModule = createSlice({
   reducers: {
     setSearchWord: (state: State, action: PayloadAction<string>) => {
       state.searchWord = action.payload;
-    },
+    }
   },
 });
 
