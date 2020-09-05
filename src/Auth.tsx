@@ -8,7 +8,7 @@ type typeAuthContext = {
 
 const AuthContext = createContext<typeAuthContext>({ currentUser: undefined });
 
-const AuthProvider = (props: any) => {
+const AuthProvider: React.FC = (props: any) => {
   const [currentUser, setCurrentUser] = useState<User | null | undefined>(
     undefined
   );

@@ -6,6 +6,8 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { RootState } from "../stores/rootReducer";
 
+import Header from "../components/Header";
+
 import { setSearchWord } from "../stores/modules/SearchWord";
 
 import {
@@ -51,6 +53,7 @@ const Home: React.FC = (props: any) => {
   const { searchWord } = useSelector((state: RootState) => {
     return state.SearchWord;
   });
+
   const dispatch = useDispatch();
   const handleSearchWord = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setSearchWord(event.target.value));
@@ -67,6 +70,7 @@ const Home: React.FC = (props: any) => {
 
   return (
     <>
+      <Header />
       <div className={classes.background}>
         <Paper
           component="form"
