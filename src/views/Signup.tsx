@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 
 import { AuthContext } from "../Auth";
-import auth from "../firebase";
+import { auth } from "../firebase";
 
 const Signup = (props: any) => {
   const { currentUser } = useContext(AuthContext);
