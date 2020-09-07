@@ -2,11 +2,10 @@ import React from "react";
 import { AppBar, Toolbar, IconButton } from "@material-ui/core";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import { auth } from "../firebase";
+import firebase from "../firebase";
 
 type Props = {
-  userName?: any;
-  history?: any;
+  userName?: string | null | undefined;
 };
 
 const useStyles = makeStyles(() =>
@@ -34,21 +33,24 @@ const Header: React.FC<Props> = (props) => {
         <Toolbar>
           にゃんこ画像配布サイト
           <div className={classes.toolbarButtons}>
-            <span className={classes.userName}>
-              こんにちは {props.userName}
-            </span>
-            <IconButton>
-              <ExitToAppIcon
-                className={classes.iconLogOut}
-                onClick={async () => {
-                  try {
-                    await auth.signOut();
-                  } catch (error) {
-                    console.log(error.message);
-                  }
-                }}
-              />
-            </IconButton>
+            {props.userName && (
+              <div>
+                <span className={classes.userName}>
+                  こんにちは {props.userName}
+                </span>
+                <IconButton
+                  onClick={async () => {
+                    try {
+                      await firebase.auth().signOut();
+                    } catch (error) {
+                      console.log(error.message);
+                    }
+                  }}
+                >
+                  <ExitToAppIcon className={classes.iconLogOut} />
+                </IconButton>
+              </div>
+            )}
           </div>
         </Toolbar>
       </AppBar>

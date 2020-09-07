@@ -58,16 +58,23 @@ const Home: React.FC = (props: any) => {
 
   const history = useHistory();
   const handleSubmit = () => {
-    history.push(`/search/${searchWord}`);
+    if ((searchWord?.length as number) !== 0) {
+      history.push(`/search/${searchWord}`);
+    } else {
+      alert("検索ワードを入力してください");
+      return;
+    }
   };
 
   useEffect(() => {
     currentUser === null && props.history.push("/login");
   }, [currentUser]);
 
+
   return (
     <>
       <Header userName={currentUser && currentUser.displayName} />
+      {searchWord}
       <div className={classes.background}>
         <Paper
           component="form"

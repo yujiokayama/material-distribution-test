@@ -1,5 +1,6 @@
 import React, { Fragment, useContext, useEffect, useState } from "react";
 
+import Header from "../components/Header";
 import {
   Button,
   Container,
@@ -12,7 +13,7 @@ import {
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 
 import { AuthContext } from "../Auth";
-import { auth } from "../firebase";
+import firebase from "../firebase";
 
 import catPenki from "../assets/images/catPenki.png";
 
@@ -47,6 +48,7 @@ const Login: React.FC = (props: any) => {
 
   return (
     <>
+      <Header userName={currentUser && currentUser.displayName} />
       <div className={classes.background}>
         <Container className={classes.loginWrap}>
           <Grid container>
@@ -84,7 +86,9 @@ const Login: React.FC = (props: any) => {
                   fullWidth
                   onClick={async () => {
                     try {
-                      await auth.signInWithEmailAndPassword(email, password);
+                      await firebase
+                        .auth()
+                        .signInWithEmailAndPassword(email, password);
                       props.history.push("/");
                     } catch (error) {
                       alert(error.message);
