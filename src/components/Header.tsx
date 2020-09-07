@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
+import { AuthContext } from "../Auth";
+
+import { Link } from "react-router-dom";
 import { AppBar, Toolbar, IconButton } from "@material-ui/core";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
@@ -10,6 +13,10 @@ type Props = {
 
 const useStyles = makeStyles(() =>
   createStyles({
+    link: {
+      color: "white",
+      textDecoration: "none",
+    },
     background: {
       backgroundColor: "#8bc43f",
     },
@@ -25,18 +32,22 @@ const useStyles = makeStyles(() =>
   })
 );
 
-const Header: React.FC<Props> = (props) => {
+const Header: React.FC<Props> = () => {
+  const { currentUser } = useContext(AuthContext);
+
   const classes = useStyles();
   return (
     <>
       <AppBar position="static" className={classes.background}>
         <Toolbar>
-          にゃんこ画像配布サイト
+          <Link to="/" className={classes.link}>
+            にゃんこ画像配布サイト
+          </Link>
           <div className={classes.toolbarButtons}>
-            {props.userName && (
+            {currentUser && (
               <div>
                 <span className={classes.userName}>
-                  こんにちは {props.userName}
+                  こんにちは {currentUser.displayName}
                 </span>
                 <IconButton
                   onClick={async () => {

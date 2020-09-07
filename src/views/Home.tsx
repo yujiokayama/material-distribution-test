@@ -9,7 +9,6 @@ import { useDispatch } from "react-redux";
 import { RootState } from "../stores/rootReducer";
 import { setSearchWord } from "../stores/modules/SearchWord";
 
-import Header from "../components/Header";
 import {
   Container,
   Grid,
@@ -57,8 +56,9 @@ const Home: React.FC = (props: any) => {
   };
 
   const history = useHistory();
-  const handleSubmit = () => {
+  const handleSubmit = (event: React.FormEvent<any>) => {
     if ((searchWord?.length as number) !== 0) {
+      event.preventDefault();
       history.push(`/search/${searchWord}`);
     } else {
       alert("検索ワードを入力してください");
@@ -70,11 +70,8 @@ const Home: React.FC = (props: any) => {
     currentUser === null && props.history.push("/login");
   }, [currentUser]);
 
-
   return (
     <>
-      <Header userName={currentUser && currentUser.displayName} />
-      {searchWord}
       <div className={classes.background}>
         <Paper
           component="form"

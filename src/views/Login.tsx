@@ -48,7 +48,6 @@ const Login: React.FC = (props: any) => {
 
   return (
     <>
-      <Header userName={currentUser && currentUser.displayName} />
       <div className={classes.background}>
         <Container className={classes.loginWrap}>
           <Grid container>

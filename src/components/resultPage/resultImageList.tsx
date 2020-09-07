@@ -3,15 +3,34 @@ import { useParams } from "react-router-dom";
 import firebase from "../../firebase";
 import { TileData } from "../../types/types";
 
+import { createStyles, makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles(() =>
+  createStyles({
+    root: {
+      display: "flex",
+      flexWrap: "wrap",
+      width: "80%",
+      textAlign: "center",
+      marginTop: "2%",
+    },
+    imageStyle: {
+      width: "300px",
+      height: "300px",
+      objectFit: "cover",
+    },
+  })
+);
+
 const ResultImageList: React.FC = () => {
-  const [data, setData] = useState<TileData[]>([]);
   const { searchWord } = useParams();
+  const classes = useStyles();
+  const [imageList, setImageList] = useState<TileData[]>([]);
 
   const fetchData = async (searchWord: string | undefined) => {
     const db = firebase.firestore();
-
-    const tileDataRef = db.collection("titleData");
-    const searchData = tileDataRef.where(
+    const titleDataRef = db.collection("titleData");
+    const searchData = titleDataRef.where(
       "keyword",
       "array-contains",
       searchWord
@@ -19,12 +38,18 @@ const ResultImageList: React.FC = () => {
     const snapShot = await searchData.get();
     const temporaryData: object[] = [];
 
-    snapShot.docs.forEach((doc) => {
+    snapShot.docs.map((doc) => {
+      console.log(doc.data());
       temporaryData.push(doc.data());
     });
 
-    setData(temporaryData as TileData[]);
-    console.log(data);
+    // titleDataRef.get().then((querySnapshot) => {
+    //   querySnapshot.forEach((doc) => {
+    //     console.log(doc);
+    //   });
+    // });
+    console.log(temporaryData);
+    setImageList(temporaryData as TileData[]);
   };
 
   useEffect(() => {
@@ -33,9 +58,19 @@ const ResultImageList: React.FC = () => {
 
   return (
     <>
-      {data.map((tile) => {
-        // <img src={tile.image} alt={tile.title} />;
-      })}
+      <h1>search result</h1>
+      {searchWord ? searchWord : sessionStorage.getItem("user")}
+      <div className={classes.root}>
+        {imageList.map((tile) => (
+          <div>
+            <img
+              className={classes.imageStyle}
+              src={tile.image}
+              alt={tile.title}
+            />
+          </div>
+        ))}
+      </div>
     </>
   );
 };
