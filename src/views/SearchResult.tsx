@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 
 import Header from "../components/Header";
+import ResultImageList from "../components/resultPage/resultImageList";
+
 import { useSelector } from "react-redux";
 import { RootState } from "../stores/rootReducer";
 
@@ -20,6 +22,7 @@ const SearchResult: React.FC = () => {
       <Header />
       <h1>search result</h1>
       {searchWord ? searchWord : sessionStorage.getItem("user")}
+      <ResultImageList />
     </>
   );
 };

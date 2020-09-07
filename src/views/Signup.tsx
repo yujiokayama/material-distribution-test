@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 
 import { AuthContext } from "../Auth";
-import { auth } from "../firebase";
+import firebase from "../firebase";
 
 const Signup = (props: any) => {
   const { currentUser } = useContext(AuthContext);
@@ -76,7 +76,8 @@ const Signup = (props: any) => {
                 fullWidth
                 onClick={async () => {
                   try {
-                    await auth
+                    await firebase
+                      .auth()
                       .createUserWithEmailAndPassword(email, password)
                       .then((result: any) => {
                         result.user.updateProfile({ displayName: name });
