@@ -20,7 +20,6 @@ const Signup = (props: any) => {
   const [password, setPassword] = useState<string>("");
 
   useEffect(() => {
-    // if logged in, redirect to home
     currentUser && props.history.push("/");
   }, [currentUser]);
 
