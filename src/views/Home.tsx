@@ -58,9 +58,9 @@ const Home: React.FC = (props: any) => {
   const history = useHistory();
   const handleSubmit = (event: React.FormEvent<any>) => {
     if ((searchWord?.length as number) !== 0) {
-      event.preventDefault();
       history.push(`/search/${searchWord}`);
     } else {
+      event.preventDefault();
       alert("検索ワードを入力してください");
       return;
     }
