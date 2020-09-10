@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import firebase from "../../firebase";
 import { TileData } from "../../types/types";
 
+import { Button } from "@material-ui/core";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(() =>
@@ -26,6 +27,7 @@ const ResultImageList: React.FC = () => {
   const { searchWord } = useParams();
   const classes = useStyles();
   const [imageList, setImageList] = useState<TileData[]>([]);
+  const history = useHistory();
 
   const fetchData = async (searchWord: string | undefined) => {
     const db = firebase.firestore();
@@ -39,7 +41,6 @@ const ResultImageList: React.FC = () => {
     const temporaryData: object[] = [];
 
     snapShot.docs.map((doc) => {
-      console.log(doc.data());
       temporaryData.push(doc.data());
     });
 
@@ -48,7 +49,6 @@ const ResultImageList: React.FC = () => {
     //     console.log(doc);
     //   });
     // });
-    console.log(temporaryData);
     setImageList(temporaryData as TileData[]);
   };
 
@@ -62,13 +62,17 @@ const ResultImageList: React.FC = () => {
       {searchWord ? searchWord : sessionStorage.getItem("user")}
       <div className={classes.root}>
         {imageList.map((tile) => (
-          <div>
+          <Button
+            onClick={() => {
+              history.push(`/download/${tile.title}`);
+            }}
+          >
             <img
               className={classes.imageStyle}
               src={tile.image}
               alt={tile.title}
             />
-          </div>
+          </Button>
         ))}
       </div>
     </>
