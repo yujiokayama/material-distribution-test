@@ -1,5 +1,6 @@
 export type TileData = {
   image: string;
+  downloadUrl: string;
   keyword: string[];
   title: string;
 };

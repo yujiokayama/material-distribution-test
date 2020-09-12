@@ -31,7 +31,7 @@ const ResultImageList: React.FC = () => {
 
   const fetchData = async (searchWord: string | undefined) => {
     const db = firebase.firestore();
-    const titleDataRef = db.collection("titleData");
+    const titleDataRef = db.collection("tileData");
     const searchData = titleDataRef.where(
       "keyword",
       "array-contains",
@@ -63,6 +63,7 @@ const ResultImageList: React.FC = () => {
       <div className={classes.root}>
         {imageList.map((tile) => (
           <Button
+            key={tile.title}
             onClick={() => {
               history.push(`/download/${tile.title}`);
             }}
