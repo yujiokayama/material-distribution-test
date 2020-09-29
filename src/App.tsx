@@ -24,7 +24,6 @@ const App: React.FC = () => {
           <Route exact path="/login" component={Login} />
           <Route exact path="/download/:searchWord" component={DownLoad} />
           <Route exact path="/search/:searchWord" component={SearchResult} />
-          {/* <Route component={NotFound} /> */}
         </AuthProvider>
       </Switch>
     </Router>
